@@ -12,12 +12,12 @@ This repository contains the complete codebase, 3D chassis design, and hardware 
 
 The robot autonomously maps an unknown maze utilizing the **Flood Fill algorithm**, dynamically calculates the optimal path, and executes a precision high-speed run to the center goal.
 
-##  Key Features & Technical Highlights
-* **Flood Fill Pathfinding:** Implements an array-based flood fill algorithm that recalculates path weights dynamically in real-time as new walls are discovered via ultrasonic sensors.
-* **Proportional-Integral-Derivative (PID) Control:** Uses a custom tuned PID control loop relying on side ultrasonic sensor distances to maintain center alignment during high-speed forward movement.
-* **Hardware Interrupts:** Utilizes ESP32's fast hardware interrupts to process rotary encoder signals, enabling high-precision odometry for exact 90°/180° turns and exact cell-by-cell forward movement.
-* **Sensor Debouncing & Error Handling:** Implements software-based debounce logic for ultrasonic sensors to reject ghost readings and prevent algorithmic crashes.
-* **Finite State Machine (FSM):** Manages robot operations between exploration and speed runs smoothly using a strictly defined state machine.
+## 🌟 Key Features & Technical Highlights
+* **Dynamic Pathfinding (Graph Theory & DP):** Uses the Flood Fill algorithm to dynamically calculate the **shortest path**. It treats the maze as a grid graph and uses Dynamic Programming principles to update path weights in real-time as new walls are discovered.
+* **Highly Efficient Edge Computing:** The pathfinding and mapping algorithms are heavily optimized to run locally on the ESP32 (an edge device), ensuring zero lag between sensor inputs, path recalculations, and motor control.
+* **Proportional-Integral-Derivative (PID) Control:** Uses a custom-tuned PID control loop to automatically adjust motor speeds, keeping the robot perfectly centered between maze walls at high speeds.
+* **Hardware Interrupts for Precision Odometry:** Uses fast hardware interrupts to read wheel encoders, ensuring the robot turns exactly 90°/180° and moves cell-by-cell with extreme accuracy.
+* **Robust State Machine:** Uses a Finite State Machine (FSM) to smoothly transition the robot from mapping the maze (Exploration Mode) to racing to the center (Speed Run Mode).
 
 ##  How the Software Works
 The robot's brain works in a continuous 3-step loop: **Look, Think, and Move**.
