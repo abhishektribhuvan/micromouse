@@ -12,20 +12,21 @@ This repository contains the complete codebase, 3D chassis design, and hardware 
 
 The robot autonomously maps an unknown maze utilizing the **Flood Fill algorithm**, dynamically calculates the optimal path, and executes a precision high-speed run to the center goal.
 
-## 🌟 Key Features & Technical Highlights
+##  Key Features & Technical Highlights
 * **Flood Fill Pathfinding:** Implements an array-based flood fill algorithm that recalculates path weights dynamically in real-time as new walls are discovered via ultrasonic sensors.
 * **Proportional-Integral-Derivative (PID) Control:** Uses a custom tuned PID control loop relying on side ultrasonic sensor distances to maintain center alignment during high-speed forward movement.
 * **Hardware Interrupts:** Utilizes ESP32's fast hardware interrupts to process rotary encoder signals, enabling high-precision odometry for exact 90°/180° turns and exact cell-by-cell forward movement.
 * **Sensor Debouncing & Error Handling:** Implements software-based debounce logic for ultrasonic sensors to reject ghost readings and prevent algorithmic crashes.
 * **Finite State Machine (FSM):** Manages robot operations between exploration and speed runs smoothly using a strictly defined state machine.
 
-## ⚙️ Software Architecture
-The software architecture follows a classic **Sense-Plan-Act** robotics loop executed continuously:
-1. **Sense:** Distances are read from 3 ultrasonic sensors. Left/Right rotary encoders update odometry asynchronously via hardware ISRs.
-2. **Plan (Exploration Mode):** Sensor data is used to update an internal 2D array representation of the maze (`updateWalls()`). The `floodFill()` algorithm recalculates the Manhattan distance from every cell to the goal, determining the optimal adjacent cell.
-3. **Act:** The robot executes physical maneuvers (`moveForwardOneCell()`, `turnRight90()`) via PWM signals sent to the H-Bridge motor driver. While moving, a PID loop continuously adjusts left/right motor speeds to prevent wall collisions.
+##  How the Software Works
+The robot's brain works in a continuous 3-step loop: **Look, Think, and Move**.
 
-## 📁 Repository Structure
+1. **Look (Sense):** The robot checks its surroundings. It uses 3 ultrasonic sensors to "see" walls and rotary encoders on the wheels to track exactly how far it has traveled.
+2. **Think (Plan):** The robot updates its internal map with newly discovered walls. It then runs the **Flood Fill algorithm** to calculate the shortest path to the center of the maze.
+3. **Move (Act):** The robot drives forward or turns based on its plan. While driving straight, a **PID controller** makes tiny, automatic speed adjustments to both wheels to keep the robot perfectly centered and prevent wall collisions.
+
+##  Repository Structure
 - `/src` - The main C++ source code (PlatformIO / Arduino compatible).
 - `/hardware` - 3D print `.stl` files for the chassis.
   - [Download Chassis STL](hardware/chassis.stl)
@@ -34,11 +35,11 @@ The software architecture follows a classic **Sense-Plan-Act** robotics loop exe
 
 ---
 
-## 🛠️ Components List
+## Components List
 To build this robot, you will need the following components:
 1. **Microcontroller:** ESP32 Development Board (ESP32 DOIT DevKit V1)
 2. **Motor Driver:** TB6612FNG Motor Driver Module
-3. **Motors:** 2x DC Gear Motors with built-in quadrature encoders
+3. **Motors:** 2x N20 DC Gear Motors(150 RPM preferred) with built-in quadrature encoders
 4. **Sensors:** 3x HC-SR04 Ultrasonic Sensors (Front, Left, Right)
 5. **Chassis:** 3D Printed Chassis (see `/hardware/chassis.stl`)
 6. **buck converter:** Mini 360 DC-DC Buck Converter
@@ -50,7 +51,7 @@ To build this robot, you will need the following components:
 
 ## 🔌 Hardware Connections (Pinout)
 
-Ensure your components are wired to the ESP32 according to this table.
+Ensure your components are wired to the ESP32 according to this table , you can make the pcb as per your need.
 
 | Component | Pin Function | ESP32 Pin |
 | :--- | :--- | :--- |
