@@ -31,7 +31,7 @@ The robot's brain works in a continuous 3-step loop: **Look, Think, and Move**.
 - `/hardware` - 3D print `.stl` files for the chassis.
   - [Download Chassis STL](hardware/chassis.stl)
 - `/docs` - Documentation, including demo videos and photos.
-  - [Watch Demo Video](docs/demo_video.mp4)
+  - [Watch Demo Video]([docs/demo_video.mp4](https://www.youtube.com/shorts/B2bcqpg_jws))
 
 ---
 
